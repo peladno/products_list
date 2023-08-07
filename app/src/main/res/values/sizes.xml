@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="item_name">18sp</dimen>
+    <dimen name="item_price">15sp</dimen>
+    <dimen name="img_height_list">200dp</dimen>
+    <dimen name="img_width_list">150dp</dimen>
+</resources>

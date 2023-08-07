@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Android api call</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">Products list</string>
+    <string name="second_fragment_label">Product detail</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="send_email">Contact sells area</string>
+</resources>
