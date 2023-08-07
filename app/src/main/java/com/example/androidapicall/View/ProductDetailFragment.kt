@@ -45,6 +45,7 @@ class ProductDetailFragment : Fragment() {
         productId?.let { id -> productViewModel.fetchProductDetail(id) }
 
         productViewModel.getProductDetail().observe(viewLifecycleOwner, Observer { product ->
+
             Glide.get(requireContext()).clearMemory()
             Glide.with(bindingProductDetail.imgDetail)
                 .load(product?.image)
@@ -61,7 +62,6 @@ class ProductDetailFragment : Fragment() {
             bindingProductDetail.creditDetail.text = creditText
 
             bindingProductDetail.buttonDetail.setOnClickListener {
-                Log.d("Button", "Click")
                 sendEmail(product?.id ?: -1, product?.name ?: "")
             }
         })
