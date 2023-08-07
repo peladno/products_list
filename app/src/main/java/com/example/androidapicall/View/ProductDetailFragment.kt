@@ -44,7 +44,11 @@ class ProductDetailFragment : Fragment() {
         }
         productId?.let { id -> productViewModel.fetchProductDetail(id) }
 
-        productViewModel.getProductDetail().observe(viewLifecycleOwner, Observer { product ->
+        productViewModel.getProductDetail().observe(viewLifecycleOwner) { product ->
+
+            Log.d("testing item", "$product")
+
+            clearProductDetailsView()
 
             Glide.get(requireContext()).clearMemory()
             Glide.with(bindingProductDetail.imgDetail)
@@ -64,9 +68,19 @@ class ProductDetailFragment : Fragment() {
             bindingProductDetail.buttonDetail.setOnClickListener {
                 sendEmail(product?.id ?: -1, product?.name ?: "")
             }
-        })
+        }
 
 
+    }
+
+    private fun clearProductDetailsView() {
+        // Restablecer los elementos de la vista a su estado predeterminado o vacío
+        Glide.with(bindingProductDetail.imgDetail).clear(bindingProductDetail.imgDetail)
+        bindingProductDetail.itemDetail.text = ""
+        bindingProductDetail.nameDetail.text = ""
+        bindingProductDetail.priceDetail.text = ""
+        bindingProductDetail.creditDetail.text = ""
+        bindingProductDetail.buttonDetail.setOnClickListener(null)
     }
 
     private fun sendEmail(id: Int, name: String) {
@@ -88,8 +102,4 @@ class ProductDetailFragment : Fragment() {
     }
 
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-    }
 }

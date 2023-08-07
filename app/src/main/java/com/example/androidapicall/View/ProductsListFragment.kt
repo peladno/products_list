@@ -50,13 +50,14 @@ class ProductsListFragment : Fragment() {
                 }
             })
 
-        adapter.selectedProduct().observe(viewLifecycleOwner, Observer { product ->
+        adapter.selectedProduct().observe(viewLifecycleOwner) { product ->
             product?.let {
                 Log.d("selected", product.id.toString())
+
+                val bundle = Bundle().apply { putInt("productId", product.id) }
+                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
             }
-            val bundle = Bundle().apply { putInt("productId", product.id) }
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
-        })
+        }
 
     }
 

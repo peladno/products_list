@@ -8,7 +8,6 @@ class RetrofitClient {
 
         private const val BASE_URL = "https://my-json-server.typicode.com/Himuravidal/FakeAPIdata/"
 
-        lateinit var retrofitInstance: Retrofit
 
         fun retrofitInstance(): ProductsApi {
 

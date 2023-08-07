@@ -16,7 +16,6 @@ import com.example.androidapicall.Model.Local.Entities.ProductListEntity
 )
 abstract class ProductsDatabase : RoomDatabase() {
 
-    //calling Dao by reference
     abstract fun getProductsDao(): ProductsDao
 
     companion object {

@@ -13,7 +13,6 @@ class ProductsRepository(private val productsDao: ProductsDao) {
 
     private val networkService = RetrofitClient.retrofitInstance()
     val productsListLiveData = productsDao.getAllProducts()
-    val productDetailLiveData = MutableLiveData<ProductListEntity>()
 
 
     suspend fun fetchProducts() {
@@ -26,7 +25,7 @@ class ProductsRepository(private val productsDao: ProductsDao) {
                     productsDao.insertAllProducts(apiProductEntity(it))
                 }
             } else {
-                Log.d("Repo", "${response.code()}-${response.errorBody()}")
+                Log.d("Error fetching", "${response.code()}-${response.errorBody()}")
             }
         } catch (e: Exception) {
             Log.e("Error", "Error fetching course: ${e.message}", e)
@@ -47,7 +46,7 @@ class ProductsRepository(private val productsDao: ProductsDao) {
                 Log.d("Repo", "${response.code()}-${response.errorBody()}")
             }
         } catch (e: Exception) {
-            Log.e("Error", "Error fetching course detail: ${e.message}", e)
+            Log.e("Error", "Error fetching product detail: ${e.message}", e)
         }
         return null
     }
