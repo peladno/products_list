@@ -1,6 +1,7 @@
 package com.example.androidapicall.ViewModel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 class ProductsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: ProductsRepository
-    private val productDetailLiveData = MutableLiveData<ProductDetailEntity>()
+    private val productDetailLiveData = MutableLiveData<ProductDetailEntity?>()
     private val productListLiveData: LiveData<List<ProductListEntity>>
 
     init {
@@ -25,11 +26,10 @@ class ProductsViewModel(application: Application) : AndroidViewModel(application
         viewModelScope.launch { repository.fetchProducts() }
 
         productListLiveData = repository.productsListLiveData
-
     }
 
     fun getProductList(): LiveData<List<ProductListEntity>> = productListLiveData
-    fun getProductDetail(): LiveData<ProductDetailEntity> = productDetailLiveData
+    fun getProductDetail(): MutableLiveData<ProductDetailEntity?> = productDetailLiveData
 
     fun fetchProductDetail(id: Int) {
         viewModelScope.launch {
@@ -40,5 +40,9 @@ class ProductsViewModel(application: Application) : AndroidViewModel(application
                 }
             }
         }
+    }
+
+    fun clearData() {
+        productDetailLiveData.value = null
     }
 }

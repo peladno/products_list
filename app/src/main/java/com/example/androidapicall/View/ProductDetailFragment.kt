@@ -16,6 +16,7 @@ import com.example.androidapicall.PriceUtils
 import com.example.androidapicall.R
 import com.example.androidapicall.ViewModel.ProductsViewModel
 import com.example.androidapicall.databinding.FragmentProductdetailBinding
+import kotlin.math.log
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -41,18 +42,18 @@ class ProductDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let { bundle ->
             productId = bundle.getInt("productId")
+            Log.d("productId", "productId: $productId")
         }
+
+
         productId?.let { id -> productViewModel.fetchProductDetail(id) }
 
         productViewModel.getProductDetail().observe(viewLifecycleOwner) { product ->
-
-            Log.d("testing item", "$product")
 
             Glide.get(requireContext()).clearMemory()
             Glide.with(bindingProductDetail.imgDetail)
                 .load(product?.image)
                 .into(bindingProductDetail.imgDetail)
-
             bindingProductDetail.itemDetail.text = product?.description
             bindingProductDetail.nameDetail.text = product?.name
             bindingProductDetail.priceDetail.text = PriceUtils.formattedPrice(product?.price ?: 0)
@@ -62,14 +63,17 @@ class ProductDetailFragment : Fragment() {
                 "Only cash"
             }
             bindingProductDetail.creditDetail.text = creditText
-
             bindingProductDetail.buttonDetail.setOnClickListener {
                 sendEmail(product?.id ?: -1, product?.name ?: "")
             }
         }
-
-
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        productViewModel.clearData()
+    }
+
     private fun sendEmail(id: Int, name: String) {
         val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:")
