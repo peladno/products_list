@@ -29,7 +29,7 @@ class ProductDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         bindingProductDetail = FragmentProductdetailBinding.inflate(inflater, container, false)
         return bindingProductDetail.root
@@ -47,8 +47,6 @@ class ProductDetailFragment : Fragment() {
         productViewModel.getProductDetail().observe(viewLifecycleOwner) { product ->
 
             Log.d("testing item", "$product")
-
-            clearProductDetailsView()
 
             Glide.get(requireContext()).clearMemory()
             Glide.with(bindingProductDetail.imgDetail)
@@ -72,17 +70,6 @@ class ProductDetailFragment : Fragment() {
 
 
     }
-
-    private fun clearProductDetailsView() {
-        // Restablecer los elementos de la vista a su estado predeterminado o vacío
-        Glide.with(bindingProductDetail.imgDetail).clear(bindingProductDetail.imgDetail)
-        bindingProductDetail.itemDetail.text = ""
-        bindingProductDetail.nameDetail.text = ""
-        bindingProductDetail.priceDetail.text = ""
-        bindingProductDetail.creditDetail.text = ""
-        bindingProductDetail.buttonDetail.setOnClickListener(null)
-    }
-
     private fun sendEmail(id: Int, name: String) {
         val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:")
